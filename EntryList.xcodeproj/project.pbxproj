@@ -1,0 +1,551 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F8CB4BD61CF04B3B00E8860A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4BD51CF04B3B00E8860A /* AppDelegate.swift */; };
+		F8CB4BDB1CF04B3B00E8860A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8CB4BD91CF04B3B00E8860A /* Main.storyboard */; };
+		F8CB4BDD1CF04B3B00E8860A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8CB4BDC1CF04B3B00E8860A /* Assets.xcassets */; };
+		F8CB4BE01CF04B3B00E8860A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8CB4BDE1CF04B3B00E8860A /* LaunchScreen.storyboard */; };
+		F8CB4BE81CF04C3800E8860A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4BE71CF04C3800E8860A /* DetailViewController.swift */; };
+		F8CB4BEA1CF04C4200E8860A /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4BE91CF04C4200E8860A /* MasterViewController.swift */; };
+		F8CB4C021CF04F7A00E8860A /* SQLighterDbImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4BFF1CF04F7A00E8860A /* SQLighterDbImpl.m */; };
+		F8CB4C031CF04F7A00E8860A /* SQLighterRsImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C011CF04F7A00E8860A /* SQLighterRsImpl.m */; };
+		F8CB4C061CF04FF500E8860A /* SQLighterDb.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C041CF04FF500E8860A /* SQLighterDb.java */; };
+		F8CB4C071CF04FF500E8860A /* SQLighterRs.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C051CF04FF500E8860A /* SQLighterRs.java */; };
+		F8CB4C091CF0501500E8860A /* Entry.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C081CF0501500E8860A /* Entry.java */; };
+		F8CB4C0C1CF0501D00E8860A /* EntryI.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C0A1CF0501D00E8860A /* EntryI.java */; };
+		F8CB4C0D1CF0501D00E8860A /* EntryROI.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C0B1CF0501D00E8860A /* EntryROI.java */; };
+		F8CB4C0F1CF0503000E8860A /* DbEntryService.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C0E1CF0503000E8860A /* DbEntryService.java */; };
+		F8CB4C111CF0503800E8860A /* EntryServiceI.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C101CF0503800E8860A /* EntryServiceI.java */; };
+		F8CB4C151CF0504500E8860A /* EntryListViewModel.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C121CF0504500E8860A /* EntryListViewModel.java */; };
+		F8CB4C161CF0504500E8860A /* EntryViewModel.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C131CF0504500E8860A /* EntryViewModel.java */; };
+		F8CB4C171CF0504500E8860A /* ViewModel.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C141CF0504500E8860A /* ViewModel.java */; };
+		F8CB4C191CF0516E00E8860A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CB4C181CF0516E00E8860A /* libsqlite3.dylib */; };
+		F8CB4C1B1CF0517900E8860A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CB4C1A1CF0517900E8860A /* Security.framework */; };
+		F8CB4C1D1CF0519900E8860A /* libicucore.A.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CB4C1C1CF0519900E8860A /* libicucore.A.dylib */; };
+		F8CB4C1F1CF051B600E8860A /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CB4C1E1CF051B600E8860A /* libz.1.dylib */; };
+		F8CB4C221CF066AB00E8860A /* Singleton.java in Sources */ = {isa = PBXBuildFile; fileRef = F8CB4C211CF066AB00E8860A /* Singleton.java */; };
+		F8CB4C241CF0690600E8860A /* Entries.db in Resources */ = {isa = PBXBuildFile; fileRef = F8CB4C231CF0690600E8860A /* Entries.db */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		F8CB4C201CF051D000E8860A /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = sourcecode.java;
+			isEditable = 1;
+			outputFiles = (
+				"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.m",
+				"${DERIVED_FILES_DIR}/${INPUT_FILE_BASE}.h",
+			);
+			script = "cd masterdetail-lib\nmake\n";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXFileReference section */
+		F8CB4BD21CF04B3B00E8860A /* EntryList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EntryList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8CB4BD51CF04B3B00E8860A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F8CB4BDA1CF04B3B00E8860A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F8CB4BDC1CF04B3B00E8860A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F8CB4BDF1CF04B3B00E8860A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F8CB4BE11CF04B3B00E8860A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8CB4BE71CF04C3800E8860A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		F8CB4BE91CF04C4200E8860A /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		F8CB4BEB1CF04C4D00E8860A /* EntryList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EntryList-Bridging-Header.h"; sourceTree = "<group>"; };
+		F8CB4BFE1CF04F7A00E8860A /* SQLighterDbImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SQLighterDbImpl.h; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/impl/SQLighterDbImpl.h"; sourceTree = "<group>"; };
+		F8CB4BFF1CF04F7A00E8860A /* SQLighterDbImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SQLighterDbImpl.m; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/impl/SQLighterDbImpl.m"; sourceTree = "<group>"; };
+		F8CB4C001CF04F7A00E8860A /* SQLighterRsImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SQLighterRsImpl.h; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/impl/SQLighterRsImpl.h"; sourceTree = "<group>"; };
+		F8CB4C011CF04F7A00E8860A /* SQLighterRsImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SQLighterRsImpl.m; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/impl/SQLighterRsImpl.m"; sourceTree = "<group>"; };
+		F8CB4C041CF04FF500E8860A /* SQLighterDb.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = SQLighterDb.java; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/intf/SQLighterDb.java"; sourceTree = "<group>"; };
+		F8CB4C051CF04FF500E8860A /* SQLighterRs.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = SQLighterRs.java; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/intf/SQLighterRs.java"; sourceTree = "<group>"; };
+		F8CB4C081CF0501500E8860A /* Entry.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = Entry.java; path = "masterdetail-lib/src/main/java/masterdetail/model/impl/Entry.java"; sourceTree = "<group>"; };
+		F8CB4C0A1CF0501D00E8860A /* EntryI.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = EntryI.java; path = "masterdetail-lib/src/main/java/masterdetail/model/intf/EntryI.java"; sourceTree = "<group>"; };
+		F8CB4C0B1CF0501D00E8860A /* EntryROI.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = EntryROI.java; path = "masterdetail-lib/src/main/java/masterdetail/model/intf/EntryROI.java"; sourceTree = "<group>"; };
+		F8CB4C0E1CF0503000E8860A /* DbEntryService.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = DbEntryService.java; path = "masterdetail-lib/src/main/java/masterdetail/service/impl/DbEntryService.java"; sourceTree = "<group>"; };
+		F8CB4C101CF0503800E8860A /* EntryServiceI.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = EntryServiceI.java; path = "masterdetail-lib/src/main/java/masterdetail/service/intf/EntryServiceI.java"; sourceTree = "<group>"; };
+		F8CB4C121CF0504500E8860A /* EntryListViewModel.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = EntryListViewModel.java; path = "masterdetail-lib/src/main/java/masterdetail/viewmodel/EntryListViewModel.java"; sourceTree = "<group>"; };
+		F8CB4C131CF0504500E8860A /* EntryViewModel.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = EntryViewModel.java; path = "masterdetail-lib/src/main/java/masterdetail/viewmodel/EntryViewModel.java"; sourceTree = "<group>"; };
+		F8CB4C141CF0504500E8860A /* ViewModel.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = ViewModel.java; path = "masterdetail-lib/src/main/java/masterdetail/viewmodel/ViewModel.java"; sourceTree = "<group>"; };
+		F8CB4C181CF0516E00E8860A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
+		F8CB4C1A1CF0517900E8860A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F8CB4C1C1CF0519900E8860A /* libicucore.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.A.dylib; path = ../../../../usr/lib/libicucore.A.dylib; sourceTree = "<group>"; };
+		F8CB4C1E1CF051B600E8860A /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		F8CB4C211CF066AB00E8860A /* Singleton.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = Singleton.java; path = "masterdetail-lib/src/main/java/com/vals/a2ios/sqlighter/intf/Singleton.java"; sourceTree = "<group>"; };
+		F8CB4C231CF0690600E8860A /* Entries.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entries.db; path = "masterdetail-lib/Entries.db"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F8CB4BCF1CF04B3B00E8860A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8CB4C1F1CF051B600E8860A /* libz.1.dylib in Frameworks */,
+				F8CB4C1D1CF0519900E8860A /* libicucore.A.dylib in Frameworks */,
+				F8CB4C1B1CF0517900E8860A /* Security.framework in Frameworks */,
+				F8CB4C191CF0516E00E8860A /* libsqlite3.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F8CB4BC91CF04B3B00E8860A = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C1E1CF051B600E8860A /* libz.1.dylib */,
+				F8CB4C1C1CF0519900E8860A /* libicucore.A.dylib */,
+				F8CB4C1A1CF0517900E8860A /* Security.framework */,
+				F8CB4C181CF0516E00E8860A /* libsqlite3.dylib */,
+				F8CB4BEC1CF04E3400E8860A /* masterdetail-lib */,
+				F8CB4BD41CF04B3B00E8860A /* EntryList */,
+				F8CB4BD31CF04B3B00E8860A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F8CB4BD31CF04B3B00E8860A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BD21CF04B3B00E8860A /* EntryList.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8CB4BD41CF04B3B00E8860A /* EntryList */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C231CF0690600E8860A /* Entries.db */,
+				F8CB4BE91CF04C4200E8860A /* MasterViewController.swift */,
+				F8CB4BE71CF04C3800E8860A /* DetailViewController.swift */,
+				F8CB4BD51CF04B3B00E8860A /* AppDelegate.swift */,
+				F8CB4BEB1CF04C4D00E8860A /* EntryList-Bridging-Header.h */,
+				F8CB4BD91CF04B3B00E8860A /* Main.storyboard */,
+				F8CB4BDC1CF04B3B00E8860A /* Assets.xcassets */,
+				F8CB4BDE1CF04B3B00E8860A /* LaunchScreen.storyboard */,
+				F8CB4BE11CF04B3B00E8860A /* Info.plist */,
+			);
+			path = EntryList;
+			sourceTree = "<group>";
+		};
+		F8CB4BEC1CF04E3400E8860A /* masterdetail-lib */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BED1CF04E4D00E8860A /* main */,
+			);
+			name = "masterdetail-lib";
+			sourceTree = "<group>";
+		};
+		F8CB4BED1CF04E4D00E8860A /* main */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BEE1CF04E5200E8860A /* java */,
+			);
+			name = main;
+			sourceTree = "<group>";
+		};
+		F8CB4BEE1CF04E5200E8860A /* java */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BF51CF04EC800E8860A /* masterdetail */,
+				F8CB4BEF1CF04E6C00E8860A /* com */,
+			);
+			name = java;
+			sourceTree = "<group>";
+		};
+		F8CB4BEF1CF04E6C00E8860A /* com */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BF01CF04E7300E8860A /* vals */,
+			);
+			name = com;
+			sourceTree = "<group>";
+		};
+		F8CB4BF01CF04E7300E8860A /* vals */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BF11CF04E7900E8860A /* a2ios */,
+			);
+			name = vals;
+			sourceTree = "<group>";
+		};
+		F8CB4BF11CF04E7900E8860A /* a2ios */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BF21CF04E8000E8860A /* sqlighter */,
+			);
+			name = a2ios;
+			sourceTree = "<group>";
+		};
+		F8CB4BF21CF04E8000E8860A /* sqlighter */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BF41CF04E9000E8860A /* impl */,
+				F8CB4BF31CF04E8800E8860A /* intf */,
+			);
+			name = sqlighter;
+			sourceTree = "<group>";
+		};
+		F8CB4BF31CF04E8800E8860A /* intf */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C211CF066AB00E8860A /* Singleton.java */,
+				F8CB4C041CF04FF500E8860A /* SQLighterDb.java */,
+				F8CB4C051CF04FF500E8860A /* SQLighterRs.java */,
+			);
+			name = intf;
+			sourceTree = "<group>";
+		};
+		F8CB4BF41CF04E9000E8860A /* impl */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BFE1CF04F7A00E8860A /* SQLighterDbImpl.h */,
+				F8CB4BFF1CF04F7A00E8860A /* SQLighterDbImpl.m */,
+				F8CB4C001CF04F7A00E8860A /* SQLighterRsImpl.h */,
+				F8CB4C011CF04F7A00E8860A /* SQLighterRsImpl.m */,
+			);
+			name = impl;
+			sourceTree = "<group>";
+		};
+		F8CB4BF51CF04EC800E8860A /* masterdetail */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BFA1CF04EEA00E8860A /* model */,
+				F8CB4BF71CF04ED900E8860A /* service */,
+				F8CB4BF61CF04ED100E8860A /* viewmodel */,
+			);
+			name = masterdetail;
+			sourceTree = "<group>";
+		};
+		F8CB4BF61CF04ED100E8860A /* viewmodel */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C121CF0504500E8860A /* EntryListViewModel.java */,
+				F8CB4C131CF0504500E8860A /* EntryViewModel.java */,
+				F8CB4C141CF0504500E8860A /* ViewModel.java */,
+			);
+			name = viewmodel;
+			sourceTree = "<group>";
+		};
+		F8CB4BF71CF04ED900E8860A /* service */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BF91CF04EE500E8860A /* intf */,
+				F8CB4BF81CF04EE000E8860A /* impl */,
+			);
+			name = service;
+			sourceTree = "<group>";
+		};
+		F8CB4BF81CF04EE000E8860A /* impl */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C0E1CF0503000E8860A /* DbEntryService.java */,
+			);
+			name = impl;
+			sourceTree = "<group>";
+		};
+		F8CB4BF91CF04EE500E8860A /* intf */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C101CF0503800E8860A /* EntryServiceI.java */,
+			);
+			name = intf;
+			sourceTree = "<group>";
+		};
+		F8CB4BFA1CF04EEA00E8860A /* model */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4BFC1CF04EF600E8860A /* impl */,
+				F8CB4BFB1CF04EF000E8860A /* intf */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		F8CB4BFB1CF04EF000E8860A /* intf */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C0A1CF0501D00E8860A /* EntryI.java */,
+				F8CB4C0B1CF0501D00E8860A /* EntryROI.java */,
+			);
+			name = intf;
+			sourceTree = "<group>";
+		};
+		F8CB4BFC1CF04EF600E8860A /* impl */ = {
+			isa = PBXGroup;
+			children = (
+				F8CB4C081CF0501500E8860A /* Entry.java */,
+			);
+			name = impl;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F8CB4BD11CF04B3B00E8860A /* EntryList */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8CB4BE41CF04B3B00E8860A /* Build configuration list for PBXNativeTarget "EntryList" */;
+			buildPhases = (
+				F8CB4BCE1CF04B3B00E8860A /* Sources */,
+				F8CB4BCF1CF04B3B00E8860A /* Frameworks */,
+				F8CB4BD01CF04B3B00E8860A /* Resources */,
+			);
+			buildRules = (
+				F8CB4C201CF051D000E8860A /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = EntryList;
+			productName = EntryList;
+			productReference = F8CB4BD21CF04B3B00E8860A /* EntryList.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F8CB4BCA1CF04B3B00E8860A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Stefan Buehlmann";
+				TargetAttributes = {
+					F8CB4BD11CF04B3B00E8860A = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = F8CB4BCD1CF04B3B00E8860A /* Build configuration list for PBXProject "EntryList" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F8CB4BC91CF04B3B00E8860A;
+			productRefGroup = F8CB4BD31CF04B3B00E8860A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F8CB4BD11CF04B3B00E8860A /* EntryList */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F8CB4BD01CF04B3B00E8860A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8CB4C241CF0690600E8860A /* Entries.db in Resources */,
+				F8CB4BE01CF04B3B00E8860A /* LaunchScreen.storyboard in Resources */,
+				F8CB4BDD1CF04B3B00E8860A /* Assets.xcassets in Resources */,
+				F8CB4BDB1CF04B3B00E8860A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F8CB4BCE1CF04B3B00E8860A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8CB4BD61CF04B3B00E8860A /* AppDelegate.swift in Sources */,
+				F8CB4C221CF066AB00E8860A /* Singleton.java in Sources */,
+				F8CB4C151CF0504500E8860A /* EntryListViewModel.java in Sources */,
+				F8CB4C061CF04FF500E8860A /* SQLighterDb.java in Sources */,
+				F8CB4C111CF0503800E8860A /* EntryServiceI.java in Sources */,
+				F8CB4C071CF04FF500E8860A /* SQLighterRs.java in Sources */,
+				F8CB4C161CF0504500E8860A /* EntryViewModel.java in Sources */,
+				F8CB4C0D1CF0501D00E8860A /* EntryROI.java in Sources */,
+				F8CB4C031CF04F7A00E8860A /* SQLighterRsImpl.m in Sources */,
+				F8CB4C0F1CF0503000E8860A /* DbEntryService.java in Sources */,
+				F8CB4C091CF0501500E8860A /* Entry.java in Sources */,
+				F8CB4BE81CF04C3800E8860A /* DetailViewController.swift in Sources */,
+				F8CB4C0C1CF0501D00E8860A /* EntryI.java in Sources */,
+				F8CB4BEA1CF04C4200E8860A /* MasterViewController.swift in Sources */,
+				F8CB4C021CF04F7A00E8860A /* SQLighterDbImpl.m in Sources */,
+				F8CB4C171CF0504500E8860A /* ViewModel.java in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F8CB4BD91CF04B3B00E8860A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8CB4BDA1CF04B3B00E8860A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F8CB4BDE1CF04B3B00E8860A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8CB4BDF1CF04B3B00E8860A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F8CB4BE21CF04B3B00E8860A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F8CB4BE31CF04B3B00E8860A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F8CB4BE51CF04B3B00E8860A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${J2OBJC_HOME}/include",
+					"${DERIVED_FILES_DIR}",
+					/Users/stefan/sqlighter/ios/j2objc,
+					"/Users/stefan/Desktop/EntryList/masterdetail-lib/src/main/java",
+				);
+				INFOPLIST_FILE = EntryList/Info.plist;
+				J2OBJC_HOME = "/Users/stefan/j2objc-1.0.2";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "${J2OBJC_HOME}/lib";
+				OTHER_LDFLAGS = "-ljre_emul";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanbuehlmann.EntryList;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EntryList/EntryList-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F8CB4BE61CF04B3B00E8860A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${J2OBJC_HOME}/include",
+					"${DERIVED_FILES_DIR}",
+					/Users/stefan/sqlighter/ios/j2objc,
+					"/Users/stefan/Desktop/EntryList/masterdetail-lib/src/main/java",
+				);
+				INFOPLIST_FILE = EntryList/Info.plist;
+				J2OBJC_HOME = "/Users/stefan/j2objc-1.0.2";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "${J2OBJC_HOME}/lib";
+				OTHER_LDFLAGS = "-ljre_emul";
+				PRODUCT_BUNDLE_IDENTIFIER = com.stefanbuehlmann.EntryList;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EntryList/EntryList-Bridging-Header.h";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F8CB4BCD1CF04B3B00E8860A /* Build configuration list for PBXProject "EntryList" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8CB4BE21CF04B3B00E8860A /* Debug */,
+				F8CB4BE31CF04B3B00E8860A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8CB4BE41CF04B3B00E8860A /* Build configuration list for PBXNativeTarget "EntryList" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8CB4BE51CF04B3B00E8860A /* Debug */,
+				F8CB4BE61CF04B3B00E8860A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F8CB4BCA1CF04B3B00E8860A /* Project object */;
+}
