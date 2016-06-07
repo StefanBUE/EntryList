@@ -146,8 +146,7 @@ public class CrimeListFragment extends Fragment {
             implements View.OnClickListener {
 
         private TextView mTitleTextView;
-        private TextView mDateTextView;
-        private CheckBox mSolvedCheckBox;
+        private TextView mEntryDescriptionTextView;
 
         private Crime mCrime;
 
@@ -156,15 +155,13 @@ public class CrimeListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
-            mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
-            mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
+            mEntryDescriptionTextView = (TextView) itemView.findViewById(R.id.list_item_entry_description_text_view);
         }
 
         public void bindCrime(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mSolvedCheckBox.setChecked(mCrime.isSolved());
+            mEntryDescriptionTextView.setText(mCrime.getDescription());
         }
 
         @Override

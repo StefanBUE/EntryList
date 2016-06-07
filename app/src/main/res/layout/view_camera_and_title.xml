@@ -23,5 +23,18 @@
                   android:layout_marginRight="16dp"
                   android:hint="@string/crime_title_hint"
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/entry_description_label"
+            style="?android:listSeparatorTextViewStyle"
+            />
+        <EditText android:id="@+id/entry_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:hint="@string/entry_description__hint"
+            />
     </LinearLayout>
 </LinearLayout>
