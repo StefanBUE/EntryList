@@ -40,14 +40,11 @@ public class CrimeFragment extends Fragment {
     private static final int REQUEST_PHOTO= 2;
 
     private Crime mCrime;
-    private File mPhotoFile;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
     private Button mReportButton;
     private Button mSuspectButton;
-    private ImageButton mPhotoButton;
-    private ImageView mPhotoView;
     private Callbacks mCallbacks;
 
     /**
@@ -77,7 +74,6 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-        mPhotoFile = CrimeLab.get(getActivity()).getPhotoFile(mCrime);
     }
 
     @Override
@@ -177,29 +173,6 @@ public class CrimeFragment extends Fragment {
                 PackageManager.MATCH_DEFAULT_ONLY) == null) {
             mSuspectButton.setEnabled(false);
         }
-
-        mPhotoButton = (ImageButton) v.findViewById(R.id.crime_camera);
-        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        boolean canTakePhoto = mPhotoFile != null &&
-                captureImage.resolveActivity(packageManager) != null;
-        mPhotoButton.setEnabled(canTakePhoto);
-
-        if (canTakePhoto) {
-            Uri uri = Uri.fromFile(mPhotoFile);
-            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        }
-
-        mPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(captureImage, REQUEST_PHOTO);
-            }
-        });
-
-        mPhotoView = (ImageView) v.findViewById(R.id.crime_photo);
-        updatePhotoView();
-
         return v;
     }
 
@@ -247,7 +220,6 @@ public class CrimeFragment extends Fragment {
             }
         } else if (requestCode == REQUEST_PHOTO) {
             updateCrime();
-            updatePhotoView();
         }
     }
 
@@ -278,15 +250,5 @@ public class CrimeFragment extends Fragment {
         String report = getString(R.string.crime_report,
                 mCrime.getTitle(), dateString, solvedString, suspect);
         return report;
-    }
-
-    private void updatePhotoView() {
-        if (mPhotoFile == null || !mPhotoFile.exists()) {
-            mPhotoView.setImageDrawable(null);
-        } else {
-            Bitmap bitmap = PictureUtils.getScaledBitmap(
-                    mPhotoFile.getPath(), getActivity());
-            mPhotoView.setImageBitmap(bitmap);
-        }
     }
 }

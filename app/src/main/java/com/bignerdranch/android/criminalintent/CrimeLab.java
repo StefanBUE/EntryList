@@ -75,17 +75,6 @@ public class CrimeLab {
         }
     }
 
-    public File getPhotoFile(Crime crime) {
-        File externalFilesDir = mContext
-                .getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-        if (externalFilesDir == null) {
-            return null;
-        }
-
-        return new File(externalFilesDir, crime.getPhotoFilename());
-    }
-
     public void updateCrime(Crime crime) {
         String uuidString = crime.getId().toString();
         ContentValues values = getContentValues(crime);
