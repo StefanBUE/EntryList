@@ -43,7 +43,6 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
-    private Button mSuspectButton;
     private Callbacks mCallbacks;
 
     /**
@@ -140,24 +139,6 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        final Intent pickContact = new Intent(Intent.ACTION_PICK,
-                ContactsContract.Contacts.CONTENT_URI);
-        mSuspectButton = (Button)v.findViewById(R.id.crime_suspect);
-        mSuspectButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivityForResult(pickContact, REQUEST_CONTACT);
-            }
-        });
-
-        if (mCrime.getSuspect() != null) {
-            mSuspectButton.setText(mCrime.getSuspect());
-        }
-
-        PackageManager packageManager = getActivity().getPackageManager();
-        if (packageManager.resolveActivity(pickContact,
-                PackageManager.MATCH_DEFAULT_ONLY) == null) {
-            mSuspectButton.setEnabled(false);
-        }
         return v;
     }
 
@@ -173,36 +154,6 @@ public class CrimeFragment extends Fragment {
             mCrime.setDate(date);
             updateCrime();
             updateDate();
-        } else if (requestCode == REQUEST_CONTACT && data != null) {
-            Uri contactUri = data.getData();
-            // Specify which fields you want your query to return
-            // values for.
-            String[] queryFields = new String[] {
-                    ContactsContract.Contacts.DISPLAY_NAME,
-            };
-            // Perform your query - the contactUri is like a "where"
-            // clause here
-            ContentResolver resolver = getActivity().getContentResolver();
-            Cursor c = resolver
-                    .query(contactUri, queryFields, null, null, null);
-
-            try {
-                // Double-check that you actually got results
-                if (c.getCount() == 0) {
-                    return;
-                }
-
-                // Pull out the first column of the first row of data -
-                // that is your suspect's name.
-                c.moveToFirst();
-
-                String suspect = c.getString(0);
-                mCrime.setSuspect(suspect);
-                updateCrime();
-                mSuspectButton.setText(suspect);
-            } finally {
-                c.close();
-            }
         } else if (requestCode == REQUEST_PHOTO) {
             updateCrime();
         }
