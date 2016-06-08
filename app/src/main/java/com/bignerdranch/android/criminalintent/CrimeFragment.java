@@ -1,33 +1,15 @@
 package com.bignerdranch.android.criminalintent;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
-import java.io.File;
-import java.util.Date;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
@@ -136,14 +118,7 @@ public class CrimeFragment extends Fragment {
 
         return v;
     }
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-    }
-*/
+
     private void updateCrime() {
         CrimeLab.get(getActivity()).updateCrime(mCrime);
         mCallbacks.onCrimeUpdated(mCrime);

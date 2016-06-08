@@ -1,6 +1,5 @@
 package com.bignerdranch.android.criminalintent;
 
-import java.util.Date;
 import java.util.UUID;
 
 public class Crime {

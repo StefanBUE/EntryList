@@ -13,8 +13,12 @@ public class CrimeListActivity extends SingleFragmentActivity
 
     @Override
     protected int getLayoutResId() {
+        // here the switch between using the refs.xml files
+        // - activity_fragment.xml with fragment_container
+        // - activity_twopane.xml  with fragment_container & detail_fragment_container
         return R.layout.activity_masterdetail;
     }
+
 
     @Override
     public void onCrimeSelected(Crime crime) {
