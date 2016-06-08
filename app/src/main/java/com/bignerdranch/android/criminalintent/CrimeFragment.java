@@ -34,9 +34,6 @@ public class CrimeFragment extends Fragment {
 
     private static final String ARG_CRIME_ID = "crime_id";
 
-    private static final int REQUEST_DATE = 0;
-    private static final int REQUEST_PHOTO= 2;
-
     private Crime mCrime;
     private EditText mTitleField;
     private EditText mEntryDescriptionField;
@@ -139,23 +136,14 @@ public class CrimeFragment extends Fragment {
 
         return v;
     }
-
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-
-        if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data
-                    .getSerializableExtra(DatePickerFragment.EXTRA_DATE); // remove that too entirely
-            // mCrime.setDate(date);
-            updateCrime();
-        } else if (requestCode == REQUEST_PHOTO) {
-            updateCrime();
-        }
     }
-
+*/
     private void updateCrime() {
         CrimeLab.get(getActivity()).updateCrime(mCrime);
         mCallbacks.onCrimeUpdated(mCrime);

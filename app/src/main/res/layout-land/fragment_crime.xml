@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="match_parent">
+
+    <!-- used to be wrap_content -->
+
     <include layout="@layout/view_camera_and_title" />
 
 </LinearLayout>
