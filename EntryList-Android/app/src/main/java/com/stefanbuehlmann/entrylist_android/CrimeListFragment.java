@@ -15,23 +15,33 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import com.stefanbuehlmann.entriesvm.model.intf.EntryI;
+import com.stefanbuehlmann.entriesvm.service.impl.DbEntryService;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
+
 public class CrimeListFragment extends Fragment {
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
     private Callbacks mCallbacks;
+    private EntryListViewModel entryListVM;
 
     /**
      * Required interface for hosting activities.
      */
     public interface Callbacks {
-        void onCrimeSelected(Crime crime);
+        void onCrimeSelected(EntryViewModel entryVM);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        // this is one of the restricted calls to this singleton, dont' add more, use entryListVM
+        entryListVM = EntryListViewModelSingleton.getInstance();
     }
 
     @Override
@@ -75,10 +85,9 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
+                EntryViewModel entryVM = entryListVM.create();
                 updateUI();
-                mCallbacks.onCrimeSelected(crime);
+                mCallbacks.onCrimeSelected(entryVM);
                 return true;
             case R.id.menu_item_delete_crime:
                 return true;
@@ -90,14 +99,11 @@ public class CrimeListFragment extends Fragment {
     }
 
     public void updateUI() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        List<Crime> crimes = crimeLab.getCrimes();
-
         if (mAdapter == null) {
-            mAdapter = new CrimeAdapter(crimes);
+            mAdapter = new CrimeAdapter(entryListVM);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.setCrimes(crimes);
+            mAdapter.setCrimes(entryListVM);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -105,37 +111,40 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder 
             implements View.OnClickListener {
 
-        private TextView mTitleTextView;
+        private TextView mEntryIdTextView;
+        private TextView mEntryNameTextView;
         private TextView mEntryDescriptionTextView;
 
-        private Crime mCrime;
+        private EntryViewModel mEntryVM;
 
         public CrimeHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
-            mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
+            mEntryIdTextView = (TextView) itemView.findViewById(R.id.list_item_entry_id_text_view);
+            mEntryNameTextView = (TextView) itemView.findViewById(R.id.list_item_entry_name_text_view);
             mEntryDescriptionTextView = (TextView) itemView.findViewById(R.id.list_item_entry_description_text_view);
         }
 
-        public void bindCrime(Crime crime) {
-            mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mEntryDescriptionTextView.setText(mCrime.getDescription());
+        public void bindCrime(EntryViewModel entryVM) {
+            mEntryVM = entryVM;
+            mEntryIdTextView.setText(""+mEntryVM.getId());
+            mEntryNameTextView.setText(mEntryVM.getName());
+            mEntryDescriptionTextView.setText(mEntryVM.getDescription());
         }
 
         @Override
         public void onClick(View v) {
-            mCallbacks.onCrimeSelected(mCrime);
+            mCallbacks.onCrimeSelected(mEntryVM);
         }
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
 
-        private List<Crime> mCrimes;
+        private EntryListViewModel mEntryListVM;
 
-        public CrimeAdapter(List<Crime> crimes) {
-            mCrimes = crimes;
+        public CrimeAdapter(EntryListViewModel entryListVM) {
+            mEntryListVM = entryListVM;
         }
 
         @Override
@@ -147,17 +156,17 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
-            Crime crime = mCrimes.get(position);
-            holder.bindCrime(crime);
+            EntryViewModel entryVM = mEntryListVM.find(position);
+            holder.bindCrime(entryVM);
         }
 
         @Override
         public int getItemCount() {
-            return mCrimes.size();
+            return mEntryListVM.count();
         }
 
-        public void setCrimes(List<Crime> crimes) {
-            mCrimes = crimes;
+        public void setCrimes(EntryListViewModel entryListVM) {
+            mEntryListVM = entryListVM;
         }
     }
 }

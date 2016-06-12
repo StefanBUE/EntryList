@@ -9,20 +9,25 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.stefanbuehlmann.entriesvm.service.intf.EntryServiceI;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
+
 import java.util.List;
 import java.util.UUID;
 
 public class CrimePagerActivity extends AppCompatActivity
         implements CrimeFragment.Callbacks {
-    private static final String EXTRA_CRIME_ID =
-            "com.bignerdranch.android.criminalintent.crime_id";
+    private static final String EXTRA_ENTRY_ID =
+            "com.stefanbuehlmann.entrylist_android.entry_id";
 
     private ViewPager mViewPager;
-    private List<Crime> mCrimes;
+    private EntryListViewModel entryListVM;
 
-    public static Intent newIntent(Context packageContext, UUID crimeId) {
+    public static Intent newIntent(Context packageContext, long entryId) {
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
-        intent.putExtra(EXTRA_CRIME_ID, crimeId);
+        intent.putExtra(EXTRA_ENTRY_ID, entryId);
         return intent;
     }
 
@@ -31,36 +36,39 @@ public class CrimePagerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crime_pager);
 
-        UUID crimeId = (UUID) getIntent()
-                .getSerializableExtra(EXTRA_CRIME_ID);
+        long entryId = (long) getIntent()
+                .getSerializableExtra(EXTRA_ENTRY_ID);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view_pager);
 
-        mCrimes = CrimeLab.get(this).getCrimes();
+        // this is one of the restricted calls to this singleton, dont' add more, use entryListVM
+        entryListVM = EntryListViewModelSingleton.getInstance();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
 
             @Override
             public Fragment getItem(int position) {
-                Crime crime = mCrimes.get(position);
-                return CrimeFragment.newInstance(crime.getId());
+                EntryViewModel entryVM = entryListVM.find(position);
+                return CrimeFragment.newInstance(entryVM.getId());
             }
 
             @Override
             public int getCount() {
-                return mCrimes.size();
+                return entryListVM.count();
             }
         });
 
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() { // TODO depricated!!!
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
             @Override
             public void onPageSelected(int position) {
-                Crime crime = mCrimes.get(position);
-                if (crime.getTitle() != null) {
-                    setTitle(crime.getTitle());
+                EntryViewModel entryVM = entryListVM.find(position);
+
+                if (entryVM.getName() != null) {
+                    setTitle(entryVM.getName());
                 }
             }
 
@@ -68,16 +76,14 @@ public class CrimePagerActivity extends AppCompatActivity
             public void onPageScrollStateChanged(int state) { }
         });
 
-        for (int i = 0; i < mCrimes.size(); i++) {
-            if (mCrimes.get(i).getId().equals(crimeId)) {
-                mViewPager.setCurrentItem(i);
-                break;
-            }
+        int index = entryListVM.indexOf(entryId);
+        if (index != EntryServiceI.NO_ID) {
+            mViewPager.setCurrentItem(index);
         }
     }
 
     @Override
-    public void onCrimeUpdated(Crime crime) {
+    public void onCrimeUpdated(EntryViewModel entryVM) {
 
     }
 }

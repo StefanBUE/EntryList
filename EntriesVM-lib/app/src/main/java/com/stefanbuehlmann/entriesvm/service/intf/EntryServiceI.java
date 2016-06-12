@@ -8,7 +8,7 @@ import com.stefanbuehlmann.entriesvm.model.intf.EntryROI;
 import com.stefanbuehlmann.entriesvm.model.intf.EntryI;
 
 public interface EntryServiceI {
-    public long NO_ID = -1;
+    public int NO_ID = -1;
 
     public List<EntryI> selectWhere(String whereClause);
     

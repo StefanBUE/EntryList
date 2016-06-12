@@ -10,14 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.UUID;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 
 public class CrimeFragment extends Fragment {
 
-    private static final String ARG_CRIME_ID = "crime_id";
+    private static final String BUNDLE_ARG_ENTRY_ID = "entry_id";
 
-    private Crime mCrime;
-    private EditText mTitleField;
+    private EntryViewModel mEntryVM;
+    private EditText mEntryIdField;
+    private EditText mEntryNameField;
     private EditText mEntryDescriptionField;
     private Callbacks mCallbacks;
 
@@ -25,12 +28,12 @@ public class CrimeFragment extends Fragment {
      * Required interface for hosting activities.
      */
     public interface Callbacks {
-        void onCrimeUpdated(Crime crime);
+        void onCrimeUpdated(EntryViewModel entryVM);
     }
 
-    public static CrimeFragment newInstance(UUID crimeId) {
+    public static CrimeFragment newInstance(long entryId) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_CRIME_ID, crimeId);
+        args.putSerializable(BUNDLE_ARG_ENTRY_ID, entryId);
 
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
@@ -46,16 +49,16 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
-        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        long entryId = (long) getArguments().getSerializable(BUNDLE_ARG_ENTRY_ID);
+
+        EntryListViewModel entryListVM = EntryListViewModelSingleton.getInstance();
+        mEntryVM = entryListVM.find(entryListVM.indexOf(entryId));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        CrimeLab.get(getActivity())
-                .updateCrime(mCrime);
+        mEntryVM.save();
     }
 
     @Override
@@ -69,9 +72,10 @@ public class CrimeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
-        mTitleField = (EditText) v.findViewById(R.id.crime_title);
-        mTitleField.setText(mCrime.getTitle());
-        mTitleField.addTextChangedListener(new TextWatcher() {
+        // TODO: read only field for the ID
+        mEntryNameField = (EditText) v.findViewById(R.id.crime_title);
+        mEntryNameField.setText(mEntryVM.getName());
+        mEntryNameField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -82,7 +86,7 @@ public class CrimeFragment extends Fragment {
                 if (getActivity() == null) {
                     return;
                 }
-                mCrime.setTitle(s.toString());
+                mEntryVM.setName(s.toString());
                 updateCrime();
             }
 
@@ -94,7 +98,7 @@ public class CrimeFragment extends Fragment {
 
 
         mEntryDescriptionField = (EditText) v.findViewById(R.id.entry_description);
-        mEntryDescriptionField.setText(mCrime.getDescription());
+        mEntryDescriptionField.setText(mEntryVM.getDescription());
         mEntryDescriptionField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,7 +110,7 @@ public class CrimeFragment extends Fragment {
                 if (getActivity() == null) {
                     return;
                 }
-                mCrime.setDescription(s.toString());
+                mEntryVM.setDescription(s.toString());
                 updateCrime();
             }
 
@@ -120,7 +124,7 @@ public class CrimeFragment extends Fragment {
     }
 
     private void updateCrime() {
-        CrimeLab.get(getActivity()).updateCrime(mCrime);
-        mCallbacks.onCrimeUpdated(mCrime);
+        mEntryVM.save();
+        mCallbacks.onCrimeUpdated(mEntryVM);
     }
 }

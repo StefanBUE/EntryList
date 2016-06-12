@@ -18,7 +18,7 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
     
     public static final String ENTRY_AT_CHG = "EntryListViewModel_EntryAt_chg";
 
-    private ArrayList<EntryViewModel> list = null; // = new ArrayList<EntryViewModel>();
+    private ArrayList<EntryViewModel> list = null;
     private EntryServiceI entryService;
     
     private void clearList() { // free memory of the list and remove all listeners
@@ -67,7 +67,10 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
         return entryViewModel;
     }
     
-    public void delete (int id) {
+    public void delete (int id, int todo) {
+        // TODO I still have a major problem: The positions and the ids dont' match!!!
+        // The parameter id must be an index (position on the list)!!! Android assumes so
+        // I may use indexOf(EntryViewModel entry)
         // TODO propagate to DB and fire change, unregister ChangeListener???
         EntryViewModel entryVM = list.remove(id);
         if (entryVM != null) {
@@ -90,18 +93,31 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
     
     // public void delete (DetailEntry detailEntry);
     
-    public void update(EntryViewModel entry) {
+    public void update(EntryViewModel entry, int really_needed) {
         // TODO propagate to DB  and fire change
+        // use existing code in EntryViewModel !!!
     }
     
     public EntryViewModel find(int id) {
         return list.get(id);
     }
-    
+
     public int indexOf(EntryViewModel entry) {
         return list.indexOf(entry);
     }
-    
+
+    public int indexOf(long entryId) {
+        int result;
+        int count = count();
+        for (result = 0; result < count; result++) {
+            if (list.get(result).getId() == entryId) {
+                // found it, return its index
+                return result;
+            }
+        }
+        return EntryServiceI.NO_ID;
+    }
+
     // public Boolean exists(int id);
     
     // public List<DetailEntry> findAll();
