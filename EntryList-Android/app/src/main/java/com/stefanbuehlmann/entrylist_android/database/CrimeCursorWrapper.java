@@ -1,0 +1,28 @@
+package com.stefanbuehlmann.entrylist_android.database;
+
+import android.database.Cursor;
+import android.database.CursorWrapper;
+
+import com.stefanbuehlmann.entrylist_android.Crime;
+
+import java.util.UUID;
+
+import com.stefanbuehlmann.entrylist_android.database.CrimeDbSchema.CrimeTable;
+
+public class CrimeCursorWrapper extends CursorWrapper {
+    public CrimeCursorWrapper(Cursor cursor) {
+        super(cursor);
+    }
+
+    public Crime getCrime() {
+        String uuidString = getString(getColumnIndex(CrimeTable.Cols.UUID));
+        String title = getString(getColumnIndex(CrimeTable.Cols.TITLE));
+        String description = getString(getColumnIndex(CrimeTable.Cols.DESCRIPTION));
+
+        Crime crime = new Crime(UUID.fromString(uuidString));
+        crime.setTitle(title);
+        crime.setDescription(description);
+
+        return crime;
+    }
+}

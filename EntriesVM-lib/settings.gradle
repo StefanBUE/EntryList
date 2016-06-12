@@ -1,0 +1,7 @@
+include ':app'
+
+// done according to
+// http://stackoverflow.com/questions/16601299/how-to-create-a-library-project-in-android-studio-and-an-application-project-tha
+// http://www.philosophicalhacker.com/2014/10/03/an-alternative-multiproject-setup-for-android-studio/
+include ':SQLighter-lib'
+project(':SQLighter-lib').projectDir = new File('../SQLighter-lib/app')
