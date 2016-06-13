@@ -65,12 +65,12 @@ public class EntryListActivity extends SingleFragmentActivity
         }
     }
 
-    // implement interface EntryListFragment.Callbacks with onCrimeSelected
+    // implement interface EntryListFragment.Callbacks with onEntrySelected
     // corresponds roughly to iOS's MasterViewController.changeSelection, which calls
     // the delegateDetailViewC which implements entrySelected
     // Android does that with the Intents-Datapassing approach
     @Override
-    public void onCrimeSelected(EntryViewModel entryVM) {
+    public void onEntrySelected(EntryViewModel entryVM) {
         if (findViewById(R.id.detail_fragment_container) == null) {
             Intent intent = EntryPagerActivity.newIntent(this, entryVM.getId());
             startActivity(intent);

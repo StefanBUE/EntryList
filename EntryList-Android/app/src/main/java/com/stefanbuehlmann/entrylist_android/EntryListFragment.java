@@ -19,8 +19,8 @@ import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 
 public class EntryListFragment extends Fragment {
 
-    private RecyclerView mCrimeRecyclerView;
-    private CrimeAdapter mAdapter;
+    private RecyclerView mEntryRecyclerView;
+    private EntryAdapter mAdapter;
     private Callbacks mCallbacks;
     private EntryListViewModel entryListVM;
 
@@ -28,7 +28,7 @@ public class EntryListFragment extends Fragment {
      * Required interface for hosting activities.
      */
     public interface Callbacks {
-        void onCrimeSelected(EntryViewModel entryVM);
+        void onEntrySelected(EntryViewModel entryVM);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class EntryListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_entry_list, container, false);
 
-        mCrimeRecyclerView = (RecyclerView) view
+        mEntryRecyclerView = (RecyclerView) view
                 .findViewById(R.id.entry_recycler_view);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mEntryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
 
         return view;
@@ -83,7 +83,7 @@ public class EntryListFragment extends Fragment {
             case R.id.menu_item_new_entry:
                 EntryViewModel entryVM = entryListVM.create();
                 updateUI();
-                mCallbacks.onCrimeSelected(entryVM);
+                mCallbacks.onEntrySelected(entryVM);
                 return true;
             case R.id.menu_item_delete_entry:
                 return true;
@@ -96,15 +96,15 @@ public class EntryListFragment extends Fragment {
 
     public void updateUI() {
         if (mAdapter == null) {
-            mAdapter = new CrimeAdapter(entryListVM);
-            mCrimeRecyclerView.setAdapter(mAdapter);
+            mAdapter = new EntryAdapter(entryListVM);
+            mEntryRecyclerView.setAdapter(mAdapter);
         } else {
-            mAdapter.setCrimes(entryListVM);
+            mAdapter.setEntryList(entryListVM);
             mAdapter.notifyDataSetChanged();
         }
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder 
+    private class EntryHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         private TextView mEntryIdTextView;
@@ -113,7 +113,7 @@ public class EntryListFragment extends Fragment {
 
         private EntryViewModel mEntryVM;
 
-        public CrimeHolder(View itemView) {
+        public EntryHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
 
@@ -122,7 +122,7 @@ public class EntryListFragment extends Fragment {
             mEntryDescriptionTextView = (TextView) itemView.findViewById(R.id.list_item_entry_description_text_view);
         }
 
-        public void bindCrime(EntryViewModel entryVM) {
+        public void bindEntry(EntryViewModel entryVM) {
             mEntryVM = entryVM;
             mEntryIdTextView.setText(""+mEntryVM.getId());
             mEntryNameTextView.setText(mEntryVM.getName());
@@ -131,29 +131,29 @@ public class EntryListFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            mCallbacks.onCrimeSelected(mEntryVM);
+            mCallbacks.onEntrySelected(mEntryVM);
         }
     }
 
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
+    private class EntryAdapter extends RecyclerView.Adapter<EntryHolder> {
 
         private EntryListViewModel mEntryListVM;
 
-        public CrimeAdapter(EntryListViewModel entryListVM) {
+        public EntryAdapter(EntryListViewModel entryListVM) {
             mEntryListVM = entryListVM;
         }
 
         @Override
-        public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public EntryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View view = layoutInflater.inflate(R.layout.entry_list_item, parent, false);
-            return new CrimeHolder(view);
+            return new EntryHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(CrimeHolder holder, int position) {
+        public void onBindViewHolder(EntryHolder holder, int position) {
             EntryViewModel entryVM = mEntryListVM.find(position);
-            holder.bindCrime(entryVM);
+            holder.bindEntry(entryVM);
         }
 
         @Override
@@ -161,7 +161,7 @@ public class EntryListFragment extends Fragment {
             return mEntryListVM.count();
         }
 
-        public void setCrimes(EntryListViewModel entryListVM) {
+        public void setEntryList(EntryListViewModel entryListVM) {
             mEntryListVM = entryListVM;
         }
     }
