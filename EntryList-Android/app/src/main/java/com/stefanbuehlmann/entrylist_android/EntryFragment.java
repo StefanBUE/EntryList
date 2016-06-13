@@ -14,7 +14,7 @@ import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 
-public class CrimeFragment extends Fragment {
+public class EntryFragment extends Fragment {
 
     private static final String BUNDLE_ARG_ENTRY_ID = "entry_id";
 
@@ -28,14 +28,14 @@ public class CrimeFragment extends Fragment {
      * Required interface for hosting activities.
      */
     public interface Callbacks {
-        void onCrimeUpdated(EntryViewModel entryVM);
+        void onEntryUpdated(EntryViewModel entryVM);
     }
 
-    public static CrimeFragment newInstance(long entryId) {
+    public static EntryFragment newInstance(long entryId) {
         Bundle args = new Bundle();
         args.putSerializable(BUNDLE_ARG_ENTRY_ID, entryId);
 
-        CrimeFragment fragment = new CrimeFragment();
+        EntryFragment fragment = new EntryFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,10 +70,10 @@ public class CrimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_crime, container, false);
+        View v = inflater.inflate(R.layout.fragment_entry, container, false);
 
         // TODO: read only field for the ID
-        mEntryNameField = (EditText) v.findViewById(R.id.crime_title);
+        mEntryNameField = (EditText) v.findViewById(R.id.entry_title);
         mEntryNameField.setText(mEntryVM.getName());
         mEntryNameField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,7 +87,7 @@ public class CrimeFragment extends Fragment {
                     return;
                 }
                 mEntryVM.setName(s.toString());
-                updateCrime();
+                updateEntry();
             }
 
             @Override
@@ -111,7 +111,7 @@ public class CrimeFragment extends Fragment {
                     return;
                 }
                 mEntryVM.setDescription(s.toString());
-                updateCrime();
+                updateEntry();
             }
 
             @Override
@@ -123,8 +123,8 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
-    private void updateCrime() {
+    private void updateEntry() {
         mEntryVM.save();
-        mCallbacks.onCrimeUpdated(mEntryVM);
+        mCallbacks.onEntryUpdated(mEntryVM);
     }
 }

@@ -8,14 +8,12 @@ import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 import com.vals.a2ios.sqlighter.impl.SQLighterDbImpl;
 import com.vals.a2ios.sqlighter.intf.Singleton;
 
-import com.stefanbuehlmann.entriesvm.model.intf.EntryI;
-
-public class CrimeListActivity extends SingleFragmentActivity
-        implements CrimeListFragment.Callbacks, CrimeFragment.Callbacks {
+public class EntryListActivity extends SingleFragmentActivity
+        implements EntryListFragment.Callbacks, EntryFragment.Callbacks {
 
     @Override
     protected Fragment createFragment() {
-        return new CrimeListFragment();
+        return new EntryListFragment();
     }
 
     @Override
@@ -67,17 +65,17 @@ public class CrimeListActivity extends SingleFragmentActivity
         }
     }
 
-    // implement interface CrimeListFragment.Callbacks with onCrimeSelected
+    // implement interface EntryListFragment.Callbacks with onCrimeSelected
     // corresponds roughly to iOS's MasterViewController.changeSelection, which calls
     // the delegateDetailViewC which implements entrySelected
     // Android does that with the Intents-Datapassing approach
     @Override
     public void onCrimeSelected(EntryViewModel entryVM) {
         if (findViewById(R.id.detail_fragment_container) == null) {
-            Intent intent = CrimePagerActivity.newIntent(this, entryVM.getId());
+            Intent intent = EntryPagerActivity.newIntent(this, entryVM.getId());
             startActivity(intent);
         } else {
-            Fragment newDetail = CrimeFragment.newInstance(entryVM.getId());
+            Fragment newDetail = EntryFragment.newInstance(entryVM.getId());
 
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.detail_fragment_container, newDetail)
@@ -85,10 +83,10 @@ public class CrimeListActivity extends SingleFragmentActivity
         }
     }
 
-    // implement interface CrimeFragment.Callbacks with onCrimeUpdated
+    // implement interface EntryFragment.Callbacks with onEntryUpdated
     @Override
-    public void onCrimeUpdated(EntryViewModel entryVM) {
-        CrimeListFragment listFragment = (CrimeListFragment)
+    public void onEntryUpdated(EntryViewModel entryVM) {
+        EntryListFragment listFragment = (EntryListFragment)
                 getSupportFragmentManager()
                         .findFragmentById(R.id.fragment_container);
         listFragment.updateUI();

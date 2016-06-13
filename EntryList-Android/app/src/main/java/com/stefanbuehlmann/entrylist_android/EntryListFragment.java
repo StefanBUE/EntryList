@@ -13,15 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
-import com.stefanbuehlmann.entriesvm.model.intf.EntryI;
-import com.stefanbuehlmann.entriesvm.service.impl.DbEntryService;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 
-public class CrimeListFragment extends Fragment {
+public class EntryListFragment extends Fragment {
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
@@ -53,10 +49,10 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_entry_list, container, false);
 
         mCrimeRecyclerView = (RecyclerView) view
-                .findViewById(R.id.crime_recycler_view);
+                .findViewById(R.id.entry_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         updateUI();
 
@@ -78,18 +74,18 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_crime_list, menu);
+        inflater.inflate(R.menu.fragment_entry_list, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_new_crime:
+            case R.id.menu_item_new_entry:
                 EntryViewModel entryVM = entryListVM.create();
                 updateUI();
                 mCallbacks.onCrimeSelected(entryVM);
                 return true;
-            case R.id.menu_item_delete_crime:
+            case R.id.menu_item_delete_entry:
                 return true;
             case R.id.menu_item_settings:
                 return true;
@@ -150,7 +146,7 @@ public class CrimeListFragment extends Fragment {
         @Override
         public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.list_item_crime, parent, false);
+            View view = layoutInflater.inflate(R.layout.entry_list_item, parent, false);
             return new CrimeHolder(view);
         }
 

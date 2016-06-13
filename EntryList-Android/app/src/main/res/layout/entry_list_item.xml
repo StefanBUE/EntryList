@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        tools:text="Crime Title"
+        tools:text="Entry Id"
         android:padding="4dp"/>
 
     <TextView
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/list_item_entry_id_text_view"
         android:textStyle="bold"
-        tools:text="Crime Title"
+        tools:text="Entry Name"
         android:padding="4dp"/>
 
     <TextView

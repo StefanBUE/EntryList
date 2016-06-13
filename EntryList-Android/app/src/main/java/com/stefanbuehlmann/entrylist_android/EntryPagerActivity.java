@@ -14,11 +14,8 @@ import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 
-import java.util.List;
-import java.util.UUID;
-
-public class CrimePagerActivity extends AppCompatActivity
-        implements CrimeFragment.Callbacks {
+public class EntryPagerActivity extends AppCompatActivity
+        implements EntryFragment.Callbacks {
     private static final String EXTRA_ENTRY_ID =
             "com.stefanbuehlmann.entrylist_android.entry_id";
 
@@ -26,7 +23,7 @@ public class CrimePagerActivity extends AppCompatActivity
     private EntryListViewModel entryListVM;
 
     public static Intent newIntent(Context packageContext, long entryId) {
-        Intent intent = new Intent(packageContext, CrimePagerActivity.class);
+        Intent intent = new Intent(packageContext, EntryPagerActivity.class);
         intent.putExtra(EXTRA_ENTRY_ID, entryId);
         return intent;
     }
@@ -34,12 +31,12 @@ public class CrimePagerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crime_pager);
+        setContentView(R.layout.activity_entry_pager);
 
         long entryId = (long) getIntent()
                 .getSerializableExtra(EXTRA_ENTRY_ID);
 
-        mViewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view_pager);
+        mViewPager = (ViewPager) findViewById(R.id.activity_entry_pager_view_pager);
 
         // this is one of the restricted calls to this singleton, dont' add more, use entryListVM
         entryListVM = EntryListViewModelSingleton.getInstance();
@@ -50,7 +47,7 @@ public class CrimePagerActivity extends AppCompatActivity
             @Override
             public Fragment getItem(int position) {
                 EntryViewModel entryVM = entryListVM.find(position);
-                return CrimeFragment.newInstance(entryVM.getId());
+                return EntryFragment.newInstance(entryVM.getId());
             }
 
             @Override
@@ -83,7 +80,7 @@ public class CrimePagerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onCrimeUpdated(EntryViewModel entryVM) {
+    public void onEntryUpdated(EntryViewModel entryVM) {
 
     }
 }
