@@ -7,6 +7,7 @@ import com.stefanbuehlmann.entriesvm.service.intf.EntryServiceI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 
@@ -15,12 +16,28 @@ import java.beans.PropertyChangeEvent;
  */
 public class EntryListViewModel extends ViewModel implements PropertyChangeListener {
     // TODO recycle unused EntryViewModels ?
-    
-    public static final String ENTRY_AT_CHG = "EntryListViewModel_EntryAt_chg";
+
+    public static final String ENTRY_AT_CHANGED = "changed_entry_at_EntryListViewModel";
+    public static final String ENTRY_AT_DELETED = "deleted_entry_at_EntryListViewModel";
+    public static final String ENTRY_AT_SELECTED = "selected_entry_at_EntryListViewModel";
 
     private ArrayList<EntryViewModel> list = null;
     private EntryServiceI entryService;
-    
+    Random randomGenerator = new Random();
+
+    // selectedEntry is purely a convenience store for index, it has no other function,
+    // except, that there is a change communicated when changed
+    private int selectedEntry = EntryServiceI.NO_ID;
+
+    public int getSelectedEntry() {
+        return selectedEntry;
+    }
+
+    public void setSelectedEntry(int selectedEntry) {
+        this.selectedEntry = selectedEntry;
+        this.firePropertyChange(ENTRY_AT_SELECTED, -1, selectedEntry);
+    }
+
     private void clearList() { // free memory of the list and remove all listeners
         if (list!= null) {
             for (EntryViewModel entryVM: list) {
@@ -47,14 +64,11 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
         this.entryService = entryService;
         // load data (currently I load all, no where clause)
         List<EntryI> l = this.entryService.selectWhere("");
-        // clear the old list
         clearList();
-        // now we must wrap up the elements in a ArrayList<EntryViewModel> list
         wrapList(l);
     }
 
-    public void init() { // TODO ich glaube das wird niergends gebraucht
-        System.out.println("hier");
+    public void init() { // TODO ich glaube das wird niergends gebraucht // no usage in Android. What about iOS?
     }
 
     public EntryViewModel create() {
@@ -67,23 +81,20 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
         return entryViewModel;
     }
     
-    public void delete (int id, int todo) {
-        // TODO I still have a major problem: The positions and the ids dont' match!!!
-        // The parameter id must be an index (position on the list)!!! Android assumes so
-        // I may use indexOf(EntryViewModel entry)
-        // TODO propagate to DB and fire change, unregister ChangeListener???
-        EntryViewModel entryVM = list.remove(id);
+    public void delete (int index) {
+        EntryViewModel entryVM = list.remove(index); // TODO führte zu IndexOutOfBoundException !
         if (entryVM != null) {
             entryVM.removePropertyChangeListener(this);
-            if (entryVM.getId()!=EntryServiceI.NO_ID) { // noId means, its wasn't inserted yet
-                this.entryService.delete(entryVM.getId());
-            }
+            entryVM.delete();
             // TODO at this point I could queue the VM for later re-use
         }
+        this.firePropertyChange(ENTRY_AT_DELETED, -1, index);
     }
     
-    public void move(int fromIndex, int toIndex) {
+    public void move(int fromIndex, int toIndex) { // no usage in Android. What about iOS?
         // TODO propagate to DB and fire change
+        // currently, the data model does not store any ordering information
+        // only iOS interface does...
         if (fromIndex == toIndex) {
             return;
         }
@@ -91,15 +102,17 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
         list.add(toIndex, entry);
     }
     
-    // public void delete (DetailEntry detailEntry);
-    
-    public void update(EntryViewModel entry, int really_needed) {
+    public void update(EntryViewModel entry, int really_needed) { // no usage in Android. What about iOS?
         // TODO propagate to DB  and fire change
         // use existing code in EntryViewModel !!!
     }
     
-    public EntryViewModel find(int id) {
-        return list.get(id);
+    public EntryViewModel find(int index) {
+        if (index<0 || index >= list.size()) {
+            return null;
+        } else {
+            return list.get(index);
+        }
     }
 
     public int indexOf(EntryViewModel entry) {
@@ -111,17 +124,12 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
         int count = count();
         for (result = 0; result < count; result++) {
             if (list.get(result).getId() == entryId) {
-                // found it, return its index
                 return result;
             }
         }
         return EntryServiceI.NO_ID;
     }
 
-    // public Boolean exists(int id);
-    
-    // public List<DetailEntry> findAll();
-    
     public int count() {
         return list.size();
     }
@@ -133,7 +141,19 @@ public class EntryListViewModel extends ViewModel implements PropertyChangeListe
                           || chg.equals(EntryViewModel.ID_CHG))) {
             EntryViewModel entry = (EntryViewModel)event.getSource();
             int idx = this.indexOf(entry);
-            this.firePropertyChange(ENTRY_AT_CHG, -1, idx);
+            this.firePropertyChange(ENTRY_AT_CHANGED, -1, idx);
         }
+    }
+
+    public void randomChange() {
+        for (EntryViewModel entryVM: list) {
+            String name = entryVM.getName();
+            if (name.contains("xx")) {
+                entryVM.setName(name.replace("xx", "x"));
+            }
+        }
+        int randomIndex = randomGenerator.nextInt(list.size());
+        EntryViewModel entryVM = list.get(randomIndex);
+        entryVM.setName(entryVM.getName()+"xxx");
     }
 }

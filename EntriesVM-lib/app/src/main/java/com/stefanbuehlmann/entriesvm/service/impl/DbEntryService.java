@@ -56,14 +56,19 @@ public class DbEntryService implements EntryServiceI {
     }
     
     @Override
-    public void delete (long id) {
-        SQLighterDb db = Singleton.getInstance().getSqLighterDb();
-        System.out.println("deleting entry where id = "+id);
-        db.addParam(id); // delete records where id == 'if'
-        try {
-            db.executeChange("delete from entry where id = ?");
-        } catch (Exception e) {
-            System.out.println("Exception when attempting to delete entry with id " + id + ": " + e);
+    public void delete (EntryI entry) {
+        long id = entry.getId();
+        if (id != EntryServiceI.NO_ID) { // NO_ID means, it wasn't inserted yet
+            SQLighterDb db = Singleton.getInstance().getSqLighterDb();
+            System.out.println("deleting entry where id = " + id);
+            db.addParam(id); // delete records where id == 'if'
+            try {
+                db.executeChange("delete from entry where id = ?");
+            } catch (Exception e) {
+                System.out.println("Exception when attempting to delete entry with id " + id + ": " + e);
+            }
+        } else {
+            System.out.println("no need to delete entry where id = " + id);
         }
     }
 

@@ -9,22 +9,23 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.stefanbuehlmann.entriesvm.service.intf.EntryServiceI;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
 import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
 
-public class EntryPagerActivity extends AppCompatActivity
-        implements EntryFragment.Callbacks {
-    private static final String EXTRA_ENTRY_ID =
-            "com.stefanbuehlmann.entrylist_android.entry_id";
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class EntryPagerActivity extends AppCompatActivity implements PropertyChangeListener {
+    private static final String EXTRA_ENTRY_POSITION =
+            "com.stefanbuehlmann.entrylist_android.entry_position";
 
     private ViewPager mViewPager;
     private EntryListViewModel entryListVM;
 
-    public static Intent newIntent(Context packageContext, long entryId) {
+    public static Intent newIntent(Context packageContext, int position) {
         Intent intent = new Intent(packageContext, EntryPagerActivity.class);
-        intent.putExtra(EXTRA_ENTRY_ID, entryId);
+        intent.putExtra(EXTRA_ENTRY_POSITION, position);
         return intent;
     }
 
@@ -33,8 +34,8 @@ public class EntryPagerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_pager);
 
-        long entryId = (long) getIntent()
-                .getSerializableExtra(EXTRA_ENTRY_ID);
+        int position1 = (int)getIntent()
+                .getSerializableExtra(EXTRA_ENTRY_POSITION);
 
         mViewPager = (ViewPager) findViewById(R.id.activity_entry_pager_view_pager);
 
@@ -46,8 +47,8 @@ public class EntryPagerActivity extends AppCompatActivity
 
             @Override
             public Fragment getItem(int position) {
-                EntryViewModel entryVM = entryListVM.find(position);
-                return EntryFragment.newInstance(entryVM.getId());
+                // EntryViewModel entryVM = entryListVM.find(position);
+                return EntryFragment.newInstance(position); // entryVM.getId());
             }
 
             @Override
@@ -73,14 +74,25 @@ public class EntryPagerActivity extends AppCompatActivity
             public void onPageScrollStateChanged(int state) { }
         });
 
-        int index = entryListVM.indexOf(entryId);
-        if (index != EntryServiceI.NO_ID) {
-            mViewPager.setCurrentItem(index);
+        EntryViewModel entryVM = entryListVM.find(position1);
+        // WHY can I have an inexisting position?
+        // this seems to have the effect, that deleting the last causes the first to be used next
+        if (entryVM != null) {
+            mViewPager.setCurrentItem(position1);
+            setTitle(entryVM.getName());
         }
+        entryListVM.addPropertyChangeListener(this);
     }
 
     @Override
-    public void onEntryUpdated(EntryViewModel entryVM) {
-
+    public void propertyChange(PropertyChangeEvent event) {
+        String eventPropertyName = event.getPropertyName();
+        if (eventPropertyName.equals(EntryListViewModel.ENTRY_AT_DELETED)) {
+            int position = (Integer)event.getNewValue();
+            System.out.println("EntryPagerActivity received "+eventPropertyName+" with position "+position);
+            // TODO do we need to inform mViewPager about the deletion?
+        } else {
+            System.out.println("EntryFragment received " + eventPropertyName );
+        }
     }
 }

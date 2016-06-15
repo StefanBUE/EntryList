@@ -8,9 +8,9 @@ import com.stefanbuehlmann.entriesvm.service.intf.EntryServiceI;
  * A view model for presenting detail items.
  */
 public class EntryViewModel extends ViewModel {
-    public static final String ID_CHG = "EntryViewModel_Id_chg";
-    public static final String NAME_CHG = "EntryViewModel_Name_chg";
-    public static final String DESCRIPTION_CHG = "EntryViewModel_Description_chg";
+    public static final String ID_CHG = "id_changed_EntryViewModel";
+    public static final String NAME_CHG = "name_changed_EntryViewModel";
+    public static final String DESCRIPTION_CHG = "description_changed_EntryViewModel";
     
     private long id;
     private String name;
@@ -65,5 +65,8 @@ public class EntryViewModel extends ViewModel {
             // it was an insert, adapt the field id
             this.setId(newId);
         }
+    }
+    public void delete() { // TODO fire change?
+        this.entryService.delete(entryOutOfSync);
     }
 }

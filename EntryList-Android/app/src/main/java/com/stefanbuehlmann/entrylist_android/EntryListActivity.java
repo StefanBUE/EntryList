@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.stefanbuehlmann.entriesvm.viewmodel.EntryViewModel;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModel;
+import com.stefanbuehlmann.entriesvm.viewmodel.EntryListViewModelSingleton;
 import com.vals.a2ios.sqlighter.impl.SQLighterDbImpl;
 import com.vals.a2ios.sqlighter.intf.Singleton;
 
-public class EntryListActivity extends SingleFragmentActivity
-        implements EntryListFragment.Callbacks, EntryFragment.Callbacks {
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class EntryListActivity extends SingleFragmentActivity implements PropertyChangeListener {
 
     @Override
     protected Fragment createFragment() {
@@ -53,8 +56,8 @@ public class EntryListActivity extends SingleFragmentActivity
              * and can implement tests. Production app settings most
              * likely would be different.
              */
+            // db.setOverwriteDb(true);
 
-            db.setOverwriteDb(true);
             try {
                 db.deployDbOnce();
                 db.openIfClosed();
@@ -63,32 +66,59 @@ public class EntryListActivity extends SingleFragmentActivity
             }
             Singleton.getInstance().setSqLighterDb(db);
         }
+        // this is one of the restricted calls to this singleton, dont' add more, use entryListVM
+        EntryListViewModel entryListVM = EntryListViewModelSingleton.getInstance();
+        entryListVM.addPropertyChangeListener(this);
     }
 
-    // implement interface EntryListFragment.Callbacks with onEntrySelected
-    // corresponds roughly to iOS's MasterViewController.changeSelection, which calls
-    // the delegateDetailViewC which implements entrySelected
-    // Android does that with the Intents-Datapassing approach
     @Override
-    public void onEntrySelected(EntryViewModel entryVM) {
-        if (findViewById(R.id.detail_fragment_container) == null) {
-            Intent intent = EntryPagerActivity.newIntent(this, entryVM.getId());
-            startActivity(intent);
+    public void propertyChange(PropertyChangeEvent event) {
+        String eventPropertyName = event.getPropertyName();
+        if (eventPropertyName.equals(EntryListViewModel.ENTRY_AT_CHANGED)) {
+            int position = (Integer)event.getNewValue();
+            System.out.println("EntryListActivity received "+eventPropertyName+" with position "+position);
+            // the following was in interface EntryFragment.Callbacks with onEntryUpdated
+            // EntryFragment.onAttach attaches THIS to the EntryFragment
+            // so the corresponding callback gets called here with this IF
+            EntryListFragment listFragment = (EntryListFragment)
+                    getSupportFragmentManager()
+                            .findFragmentById(R.id.fragment_container);
+            // TODO I had the case that listFragment was null!!! again!!!
+            if (listFragment!=null) { // WHY the f*k?
+                listFragment.updateUI();
+            }
+        } else
+        if (eventPropertyName.equals(EntryListViewModel.ENTRY_AT_SELECTED)) {
+            // implement(ed) interface EntryListFragment.Callbacks with onEntrySelected
+            // corresponds roughly to iOS's MasterViewController.changeSelection, which calls
+            // the delegateDetailViewC which implements entrySelected
+            // Android does that with the Intents-Datapassing approach
+            int position = (Integer)event.getNewValue();
+            System.out.println("EntryListActivity received "+eventPropertyName+" with position "+position);
+            if (findViewById(R.id.detail_fragment_container) == null) { // no detail > phone > EntryPagerActivity
+                Intent intent = EntryPagerActivity.newIntent(this, position);
+                startActivity(intent);
+            } else { // detail exists > set detail fragment
+                Fragment newDetail = EntryFragment.newInstance(position);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.detail_fragment_container, newDetail)
+                        .commit();
+            }
+        } else
+        if (eventPropertyName.equals(EntryListViewModel.ENTRY_AT_DELETED)) {
+            int position = (Integer)event.getNewValue();
+            System.out.println("EntryListActivity received "+eventPropertyName+" with position "+position);
+            if (findViewById(R.id.detail_fragment_container) == null) {
+                // Intent intent = EntryPagerActivity.newIntent(this, position);
+                // startActivity(intent);
+            } else { // just show the next entry,... but what about at the end?
+                Fragment newDetail = EntryFragment.newInstance(position);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.detail_fragment_container, newDetail)
+                        .commit();
+            }
         } else {
-            Fragment newDetail = EntryFragment.newInstance(entryVM.getId());
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.detail_fragment_container, newDetail)
-                    .commit();
+            System.out.println("EntryListActivity received " + eventPropertyName);
         }
-    }
-
-    // implement interface EntryFragment.Callbacks with onEntryUpdated
-    @Override
-    public void onEntryUpdated(EntryViewModel entryVM) {
-        EntryListFragment listFragment = (EntryListFragment)
-                getSupportFragmentManager()
-                        .findFragmentById(R.id.fragment_container);
-        listFragment.updateUI();
     }
 }

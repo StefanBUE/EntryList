@@ -12,14 +12,9 @@ public interface EntryServiceI {
 
     public List<EntryI> selectWhere(String whereClause);
     
-    public void delete(long id);
+    public void delete(EntryI entry);
     
     public void insertOrUpdate(EntryI entry); // it was an insert, if entrie's id changed
-    
-/*  // TODO support for reordering not yet implemented
- 
-    public void move(int fromIndex, int toIndex);
 
-*/
 }
 
